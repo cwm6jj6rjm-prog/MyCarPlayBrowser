@@ -1,31 +1,216 @@
 // !$*UTF8*$!
 {
- archiveVersion = 1;
- objectVersion = 56;
- objects = {
-  111111111111111111111111 = { isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyCarPlayBrowserApp.swift; sourceTree = "<group>"; };
-  111111111111111111111112 = { isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSettings.swift; sourceTree = "<group>"; };
-  111111111111111111111113 = { isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
-  111111111111111111111114 = { isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarPlaySceneDelegate.swift; sourceTree = "<group>"; };
-  111111111111111111111115 = { isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-  111111111111111111111116 = { isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MyCarPlayBrowser.entitlements; sourceTree = "<group>"; };
-  222222222222222222222221 = { isa = PBXBuildFile; fileRef = 111111111111111111111111; };
-  222222222222222222222222 = { isa = PBXBuildFile; fileRef = 111111111111111111111112; };
-  222222222222222222222223 = { isa = PBXBuildFile; fileRef = 111111111111111111111113; };
-  222222222222222222222224 = { isa = PBXBuildFile; fileRef = 111111111111111111111114; };
-  333333333333333333333331 = { isa = PBXGroup; children = (111111111111111111111111,111111111111111111111112,111111111111111111111113,111111111111111111111114,111111111111111111111115,111111111111111111111116,); path = MyCarPlayBrowser; sourceTree = "<group>"; };
-  333333333333333333333332 = { isa = PBXGroup; children = (333333333333333333333331,); sourceTree = "<group>"; };
-  444444444444444444444441 = { isa = PBXNativeTarget; buildConfigurationList = 666666666666666666666662; buildPhases = (555555555555555555555551,555555555555555555555552,); buildRules = (); dependencies = (); name = MyCarPlayBrowser; productName = MyCarPlayBrowser; productReference = 111111111111111111111117; productType = "com.apple.product-type.application"; };
-  444444444444444444444442 = { isa = PBXProject; buildConfigurationList = 666666666666666666666661; compatibilityVersion = "Xcode 14.0"; developmentRegion = en; hasScannedForEncodings = 0; mainGroup = 333333333333333333333332; productRefGroup = 333333333333333333333332; projectDirPath = ""; projectRoot = ""; targets = (444444444444444444444441,); };
-  111111111111111111111117 = { isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MyCarPlayBrowser.app; sourceTree = BUILT_PRODUCTS_DIR; };
-  555555555555555555555551 = { isa = PBXSourcesBuildPhase; buildActionMask = 2147483647; files = (222222222222222222222221,222222222222222222222222,222222222222222222222223,222222222222222222222224,); runOnlyForDeploymentPostprocessing = 0; };
-  555555555555555555555552 = { isa = PBXResourcesBuildPhase; buildActionMask = 2147483647; files = (); runOnlyForDeploymentPostprocessing = 0; };
-  666666666666666666666661 = { isa = XCConfigurationList; buildConfigurations = (777777777777777777777771,777777777777777777777772,); defaultConfigurationIsVisible = 0; defaultConfigurationName = Release; };
-  666666666666666666666662 = { isa = XCConfigurationList; buildConfigurations = (777777777777777777777773,777777777777777777777774,); defaultConfigurationIsVisible = 0; defaultConfigurationName = Release; };
-  777777777777777777777771 = { isa = XCBuildConfiguration; buildSettings = { ALWAYS_SEARCH_USER_PATHS = NO; CLANG_ENABLE_MODULES = YES; SWIFT_VERSION = 5.0; IPHONEOS_DEPLOYMENT_TARGET = 17.0; }; name = Debug; };
-  777777777777777777777772 = { isa = XCBuildConfiguration; buildSettings = { ALWAYS_SEARCH_USER_PATHS = NO; CLANG_ENABLE_MODULES = YES; SWIFT_VERSION = 5.0; IPHONEOS_DEPLOYMENT_TARGET = 17.0; }; name = Release; };
-  777777777777777777777773 = { isa = XCBuildConfiguration; buildSettings = { PRODUCT_BUNDLE_IDENTIFIER = com.ultor.mycarplaybrowser; INFOPLIST_FILE = MyCarPlayBrowser/Info.plist; SWIFT_VERSION = 5.0; IPHONEOS_DEPLOYMENT_TARGET = 17.0; TARGETED_DEVICE_FAMILY = "1,2"; CURRENT_PROJECT_VERSION = 1; MARKETING_VERSION = 1.0; }; name = Debug; };
-  777777777777777777777774 = { isa = XCBuildConfiguration; buildSettings = { PRODUCT_BUNDLE_IDENTIFIER = com.ultor.mycarplaybrowser; INFOPLIST_FILE = MyCarPlayBrowser/Info.plist; SWIFT_VERSION = 5.0; IPHONEOS_DEPLOYMENT_TARGET = 17.0; TARGETED_DEVICE_FAMILY = "1,2"; CURRENT_PROJECT_VERSION = 1; MARKETING_VERSION = 1.0; }; name = Release; };
- };
- rootObject = 444444444444444444444442;
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		A10000000000000000000001 /* MyCarPlayBrowserApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20000000000000000000001 /* MyCarPlayBrowserApp.swift */; };
+		A10000000000000000000002 /* AppSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20000000000000000000002 /* AppSettings.swift */; };
+		A10000000000000000000003 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20000000000000000000003 /* ContentView.swift */; };
+		A10000000000000000000004 /* CarPlaySceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20000000000000000000004 /* CarPlaySceneDelegate.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		A20000000000000000000001 /* MyCarPlayBrowserApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyCarPlayBrowserApp.swift; sourceTree = "<group>"; };
+		A20000000000000000000002 /* AppSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSettings.swift; sourceTree = "<group>"; };
+		A20000000000000000000003 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		A20000000000000000000004 /* CarPlaySceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarPlaySceneDelegate.swift; sourceTree = "<group>"; };
+		A20000000000000000000005 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A20000000000000000000006 /* MyCarPlayBrowser.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MyCarPlayBrowser.entitlements; sourceTree = "<group>"; };
+		A20000000000000000000007 /* MyCarPlayBrowser.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MyCarPlayBrowser.app; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		A30000000000000000000001 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		A40000000000000000000001 = {
+			isa = PBXGroup;
+			children = (
+				A40000000000000000000002 /* MyCarPlayBrowser */,
+				A40000000000000000000003 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		A40000000000000000000002 /* MyCarPlayBrowser */ = {
+			isa = PBXGroup;
+			children = (
+				A20000000000000000000001 /* MyCarPlayBrowserApp.swift */,
+				A20000000000000000000002 /* AppSettings.swift */,
+				A20000000000000000000003 /* ContentView.swift */,
+				A20000000000000000000004 /* CarPlaySceneDelegate.swift */,
+				A20000000000000000000005 /* Info.plist */,
+				A20000000000000000000006 /* MyCarPlayBrowser.entitlements */,
+			);
+			path = MyCarPlayBrowser;
+			sourceTree = "<group>";
+		};
+		A40000000000000000000003 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				A20000000000000000000007 /* MyCarPlayBrowser.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		A50000000000000000000001 /* MyCarPlayBrowser */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A70000000000000000000002 /* Build configuration list for PBXNativeTarget "MyCarPlayBrowser" */;
+			buildPhases = (
+				A60000000000000000000001 /* Sources */,
+				A30000000000000000000001 /* Frameworks */,
+				A60000000000000000000002 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = MyCarPlayBrowser;
+			productName = MyCarPlayBrowser;
+			productReference = A20000000000000000000007 /* MyCarPlayBrowser.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		A50000000000000000000002 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 1640;
+				TargetAttributes = {
+					A50000000000000000000001 = {
+						CreatedOnToolsVersion = 16.4;
+					};
+				};
+			};
+			buildConfigurationList = A70000000000000000000001 /* Build configuration list for PBXProject "MyCarPlayBrowser" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			mainGroup = A40000000000000000000001;
+			productRefGroup = A40000000000000000000003 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				A50000000000000000000001 /* MyCarPlayBrowser */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		A60000000000000000000002 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		A60000000000000000000001 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A10000000000000000000001 /* MyCarPlayBrowserApp.swift in Sources */,
+				A10000000000000000000002 /* AppSettings.swift in Sources */,
+				A10000000000000000000003 /* ContentView.swift in Sources */,
+				A10000000000000000000004 /* CarPlaySceneDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		A80000000000000000000001 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CODE_SIGNING_ALLOWED = NO;
+				CODE_SIGNING_REQUIRED = NO;
+				INFOPLIST_FILE = MyCarPlayBrowser/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ultor.mycarplaybrowser;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				CURRENT_PROJECT_VERSION = 1;
+				MARKETING_VERSION = 1.0;
+			};
+			name = Debug;
+		};
+		A80000000000000000000002 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CODE_SIGNING_ALLOWED = NO;
+				CODE_SIGNING_REQUIRED = NO;
+				INFOPLIST_FILE = MyCarPlayBrowser/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ultor.mycarplaybrowser;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				CURRENT_PROJECT_VERSION = 1;
+				MARKETING_VERSION = 1.0;
+			};
+			name = Release;
+		};
+		A80000000000000000000003 /* Project Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ENABLE_MODULES = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		A80000000000000000000004 /* Project Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ENABLE_MODULES = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		A70000000000000000000001 /* Build configuration list for PBXProject "MyCarPlayBrowser" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A80000000000000000000003 /* Project Debug */,
+				A80000000000000000000004 /* Project Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		A70000000000000000000002 /* Build configuration list for PBXNativeTarget "MyCarPlayBrowser" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A80000000000000000000001 /* Debug */,
+				A80000000000000000000002 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = A50000000000000000000002 /* Project object */;
 }
