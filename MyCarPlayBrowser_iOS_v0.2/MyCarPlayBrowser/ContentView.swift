@@ -1,126 +1,96 @@
+import SwiftUI
+import WebKit
 
-                    Toggle(
-                        "Automatic Car Mode",
-                        isOn: $settings.autoCarMode
-                    )
-                }
+struct ContentView: View {
+    @ObservedObject private var settings = AppSettings.shared
+    @State private var selection = "home"
+    @State private var browserURL: URL?
+    @State private var searchText = ""
 
-                Section("Browser") {
-                    Button(
-                        "Clear browser data",
-                        role: .destructive
-                    ) {
-                        Task {
-                            await WKWebsiteDataStore
-                                .default()
-                                .removeData(
-                                    ofTypes:
-                                        WKWebsiteDataStore
-                                        .allWebsiteDataTypes(),
-                                    modifiedSince:
-                                        Date(
-                                            timeIntervalSince1970: 0
-                                        )
-                                )
-                        }
-                    }
-                }
+    private var services: [Service] { Services.all }
 
-                Section("About") {
-                    LabeledContent(
-                        "App",
-                        value: "MyCarPlayBrowser"
-                    )
-
-                    LabeledContent(
-                        "Version",
-                        value: "0.3"
-                    )
-
-                    Text(
-                        "Modern iPhone browser with CarPlay integration."
-                    )
-                    .foregroundStyle(.secondary)
-                }
-            }
-            .navigationTitle(
-                t("settings", settings.language)
-            )
+    private var filteredServices: [Service] {
+        guard !searchText.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else {
+            return services
+        }
+        return services.filter {
+            $0.name.localizedCaseInsensitiveContains(searchText)
         }
     }
-}
-
-struct BrowserView: View {
-    let url: URL
-
-    @Environment(\.dismiss) private var dismiss
-    @State private var webView = WKWebView()
 
     var body: some View {
-        NavigationStack {
-            VStack(spacing: 0) {
-                WebViewContainer(
-                    webView: webView,
-                    url: url
-                )
-
-                HStack(spacing: 22) {
-                    Button {
-                        webView.goBack()
-                    } label: {
-                        Image(systemName: "chevron.left")
-                    }
-                    .disabled(!webView.canGoBack)
-
-                    Button {
-                        webView.goForward()
-                    } label: {
-                        Image(systemName: "chevron.right")
-                    }
-                    .disabled(!webView.canGoForward)
-
-                    Button {
-                        webView.reload()
-                    } label: {
-                        Image(systemName: "arrow.clockwise")
-                    }
-
-                    Spacer()
-
-                    Button("Done") {
-                        dismiss()
-                    }
-                    .fontWeight(.semibold)
-                }
-                .padding(.horizontal, 18)
-                .padding(.vertical, 12)
-                .background(.bar)
-            }
-            .navigationTitle(
-                url.host ?? "Browser"
+        TabView(selection: $selection) {
+            HomeView(
+                services: filteredServices,
+                searchText: $searchText,
+                open: open,
+                isFavorite: isFavorite,
+                toggleFavorite: toggleFavorite
             )
-            .navigationBarTitleDisplayMode(.inline)
+            .tabItem {
+                Label(t("home", settings.language), systemImage: "house.fill")
+            }
+            .tag("home")
+
+            ListPage(
+                title: t("favorites", settings.language),
+                items: settings.favorites,
+                open: open
+            )
+            .tabItem {
+                Label(t("favorites", settings.language), systemImage: "star.fill")
+            }
+            .tag("favorites")
+
+            ListPage(
+                title: t("history", settings.language),
+                items: settings.history,
+                open: open
+            )
+            .tabItem {
+                Label(t("history", settings.language), systemImage: "clock.fill")
+            }
+            .tag("history")
+
+            BrowserStartView(open: open)
+                .tabItem {
+                    Label(t("browser", settings.language), systemImage: "safari.fill")
+                }
+                .tag("browser")
+
+            SettingsView()
+                .tabItem {
+                    Label(t("settings", settings.language), systemImage: "gearshape.fill")
+                }
+                .tag("settings")
         }
-    }
-}
-
-struct WebViewContainer: UIViewRepresentable {
-    let webView: WKWebView
-    let url: URL
-
-    func makeUIView(
-        context: Context
-    ) -> WKWebView {
-        webView.allowsBackForwardNavigationGestures = true
-        webView.load(
-            URLRequest(url: url)
+        .tint(Color(red: 0.08, green: 0.48, blue: 1.0))
+        .sheet(
+            isPresented: Binding(
+                get: { browserURL != nil },
+                set: { if !$0 { browserURL = nil } }
+            )
+        ) {
+            if let url = browserURL {
+                BrowserView(url: url)
+            }
+        }
+        .preferredColorScheme(
+            settings.theme == .dark ? .dark : .light
         )
-        return webView
     }
 
-    func updateUIView(
-        _ uiView: WKWebView,
-        context: Context
-    ) {
+    private func open(_ string: String) {
+        guard let url = URL(string: string) else { return }
+
+        let item = HistoryItem(
+            title: url.host ?? string,
+            url: string
+        )
+
+        settings.history.removeAll { $0.url == string }
+        settings.history.insert(item, at: 0)
+        settings.history = Array(settings.history.prefix(100))
+
+        browserURL = url
     }
-}
