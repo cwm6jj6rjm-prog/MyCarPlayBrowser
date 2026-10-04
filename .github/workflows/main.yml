@@ -20,17 +20,11 @@ jobs:
       - name: Build iOS app
         working-directory: MyCarPlayBrowser_iOS_v0.2
         run: |
-          xcodebuild \
-            -project MyCarPlayBrowser.xcodeproj \
-            -scheme MyCarPlayBrowser \
-            -sdk iphonesimulator \
-            -configuration Debug \
-            -derivedDataPath build \
-            CODE_SIGNING_ALLOWED=NO \
-            build
+          rm -rf "$RUNNER_TEMP/MyCarPlayBrowserDerivedData"
+          xcodebuild             -project MyCarPlayBrowser.xcodeproj             -scheme MyCarPlayBrowser             -sdk iphonesimulator             -configuration Debug             -derivedDataPath "$RUNNER_TEMP/MyCarPlayBrowserDerivedData"             CODE_SIGNING_ALLOWED=NO             CODE_SIGNING_REQUIRED=NO             build
 
       - name: Upload iOS app
         uses: actions/upload-artifact@v4
         with:
           name: MyCarPlayBrowser-iOS-App
-          path: MyCarPlayBrowser_iOS_v0.2/build/Build/Products/Debug-iphonesimulator/MyCarPlayBrowser.app
+          path: ${{ runner.temp }}/MyCarPlayBrowserDerivedData/Build/Products/Debug-iphonesimulator/MyCarPlayBrowser.app
