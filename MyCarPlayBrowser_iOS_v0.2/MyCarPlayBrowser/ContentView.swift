@@ -1,5 +1,7 @@
 import SwiftUI
 import WebKit
+import Foundation
+import UIKit
 
 struct ContentView: View {
     @ObservedObject private var settings = AppSettings.shared
@@ -7,14 +9,15 @@ struct ContentView: View {
     @State private var browserURL: URL?
     @State private var searchText = ""
 
-    private var services: [Service] { Services.all }
+    private var services: [Service] {
+        Services.all
+    }
 
     private var filteredServices: [Service] {
-        guard !searchText.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else {
-            return services
-        }
+        let query = searchText.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard !query.isEmpty else { return services }
         return services.filter {
-            $0.name.localizedCaseInsensitiveContains(searchText)
+            $0.name.localizedCaseInsensitiveContains(query)
         }
     }
 
@@ -75,22 +78,19 @@ struct ContentView: View {
                 BrowserView(url: url)
             }
         }
-        .preferredColorScheme(
-            settings.theme == .dark ? .dark : .light
-        )
+        .preferredColorScheme(settings.theme == .dark ? .dark : .light)
     }
 
     private func open(_ string: String) {
-        guard let url = URL(string: string) else { return }
+        var value = string.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard !value.isEmpty else { return }
+
+        if !value.lowercased().hasPrefix("http://") &&
+            !value.lowercased().hasPrefix("https://") {
+            value = "https://" + value
+        }
+
+        guard let url = URL(string: value) else { return }
 
         let item = HistoryItem(
-            title: url.host ?? string,
-            url: string
-        )
-
-        settings.history.removeAll { $0.url == string }
-        settings.history.insert(item, at: 0)
-        settings.history = Array(settings.history.prefix(100))
-
-        browserURL = url
-    }
+            title: url.host ?? value,
