@@ -1,4 +1,4 @@
-name: MyCarPlayBrowser iOS Build
+name: MyCarPlayBrowser iOS Device Build
 
 on:
   workflow_dispatch:
@@ -20,7 +20,7 @@ jobs:
       - name: Install XcodeGen
         run: brew install xcodegen
 
-      - name: Generate clean Xcode project
+      - name: Generate Xcode project
         working-directory: MyCarPlayBrowser_iOS_v0.2
         run: |
           cat > project.yml <<'EOF'
@@ -70,7 +70,7 @@ jobs:
 
           xcodegen generate
 
-      - name: Build iOS app
+      - name: Build for iPhone
         working-directory: MyCarPlayBrowser_iOS_v0.2
         run: |
           rm -rf "$RUNNER_TEMP/MyCarPlayBrowserDerivedData"
@@ -78,15 +78,20 @@ jobs:
           xcodebuild \
             -project MyCarPlayBrowser.xcodeproj \
             -scheme MyCarPlayBrowser \
-            -sdk iphonesimulator \
+            -sdk iphoneos \
             -configuration Debug \
             -derivedDataPath "$RUNNER_TEMP/MyCarPlayBrowserDerivedData" \
             CODE_SIGNING_ALLOWED=NO \
             CODE_SIGNING_REQUIRED=NO \
             build
 
-      - name: Upload iOS app
+      - name: Package iPhone app
+        run: |
+          cd "$RUNNER_TEMP/MyCarPlayBrowserDerivedData/Build/Products/Debug-iphoneos"
+          zip -r "$RUNNER_TEMP/MyCarPlayBrowser-iPhone-App.zip" MyCarPlayBrowser.app
+
+      - name: Upload iPhone app
         uses: actions/upload-artifact@v4
         with:
-          name: MyCarPlayBrowser-iOS-App
-          path: ${{ runner.temp }}/MyCarPlayBrowserDerivedData/Build/Products/Debug-iphonesimulator/MyCarPlayBrowser.app
+          name: MyCarPlayBrowser-iPhone-App
+          path: ${{ runner.temp }}/MyCarPlayBrowser-iPhone-App.zip
