@@ -3,7 +3,7 @@ import WebKit
 
 struct ContentView: View {
     @ObservedObject private var settings = AppSettings.shared
-    @State private var url: URL?
+    @State private var browserURL: URL?
     @State private var showSettings = false
 
     var body: some View {
@@ -48,8 +48,19 @@ struct ContentView: View {
                     }
                 }
             }
-            .sheet(item: $url) { value in
-                BrowserView(url: value)
+            .sheet(
+                isPresented: Binding(
+                    get: { browserURL != nil },
+                    set: { presented in
+                        if !presented {
+                            browserURL = nil
+                        }
+                    }
+                )
+            ) {
+                if let url = browserURL {
+                    BrowserView(url: url)
+                }
             }
             .sheet(isPresented: $showSettings) {
                 SettingsView()
@@ -58,7 +69,8 @@ struct ContentView: View {
     }
 
     private func open(_ value: String) {
-        url = URL(string: value)
+        guard let value = URL(string: value) else { return }
+        browserURL = value
     }
 }
 
@@ -70,7 +82,10 @@ struct SettingsView: View {
         NavigationStack {
             Form {
                 Section(t("language", settings.language)) {
-                    Picker(t("language", settings.language), selection: $settings.language) {
+                    Picker(
+                        t("language", settings.language),
+                        selection: $settings.language
+                    ) {
                         ForEach(AppLanguage.allCases) { language in
                             Text(language.title).tag(language)
                         }
@@ -78,7 +93,10 @@ struct SettingsView: View {
                 }
 
                 Section(t("appearance", settings.language)) {
-                    Picker(t("appearance", settings.language), selection: $settings.theme) {
+                    Picker(
+                        t("appearance", settings.language),
+                        selection: $settings.theme
+                    ) {
                         Text("Dark").tag(AppTheme.dark)
                         Text("Light").tag(AppTheme.light)
                     }
@@ -86,12 +104,21 @@ struct SettingsView: View {
                 }
 
                 Section(t("carMode", settings.language)) {
-                    Toggle(t("carMode", settings.language), isOn: $settings.carMode)
-                    Toggle("Automatic Car Mode", isOn: $settings.autoCarMode)
+                    Toggle(
+                        t("carMode", settings.language),
+                        isOn: $settings.carMode
+                    )
+                    Toggle(
+                        "Automatic Car Mode",
+                        isOn: $settings.autoCarMode
+                    )
                 }
 
                 Section {
-                    Button(t("clear", settings.language), role: .destructive) {
+                    Button(
+                        t("clear", settings.language),
+                        role: .destructive
+                    ) {
                         clearWebData()
                     }
                 }
