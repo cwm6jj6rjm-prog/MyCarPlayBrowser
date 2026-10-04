@@ -17,11 +17,73 @@ jobs:
       - name: Show Xcode version
         run: xcodebuild -version
 
+      - name: Install XcodeGen
+        run: brew install xcodegen
+
+      - name: Generate clean Xcode project
+        working-directory: MyCarPlayBrowser_iOS_v0.2
+        run: |
+          cat > project.yml <<'EOF'
+          name: MyCarPlayBrowser
+
+          options:
+            deploymentTarget:
+              iOS: "17.0"
+            createIntermediateGroups: true
+
+          settings:
+            base:
+              SWIFT_VERSION: "5.0"
+              IPHONEOS_DEPLOYMENT_TARGET: "17.0"
+
+          targets:
+            MyCarPlayBrowser:
+              type: application
+              platform: iOS
+
+              sources:
+                - path: MyCarPlayBrowser
+                  excludes:
+                    - "**/*.plist"
+                    - "**/*.entitlements"
+
+              info:
+                path: MyCarPlayBrowser/Info.plist
+
+              entitlements:
+                path: MyCarPlayBrowser/MyCarPlayBrowser.entitlements
+
+              settings:
+                base:
+                  PRODUCT_BUNDLE_IDENTIFIER: com.ultor.mycarplaybrowser
+                  MARKETING_VERSION: "0.2"
+                  CURRENT_PROJECT_VERSION: "2"
+                  TARGETED_DEVICE_FAMILY: "1,2"
+                  CODE_SIGNING_ALLOWED: "NO"
+                  CODE_SIGNING_REQUIRED: "NO"
+
+              scheme:
+                gatherCoverageData: false
+                testTargets: []
+
+          EOF
+
+          xcodegen generate
+
       - name: Build iOS app
         working-directory: MyCarPlayBrowser_iOS_v0.2
         run: |
           rm -rf "$RUNNER_TEMP/MyCarPlayBrowserDerivedData"
-          xcodebuild             -project MyCarPlayBrowser.xcodeproj             -scheme MyCarPlayBrowser             -sdk iphonesimulator             -configuration Debug             -derivedDataPath "$RUNNER_TEMP/MyCarPlayBrowserDerivedData"             CODE_SIGNING_ALLOWED=NO             CODE_SIGNING_REQUIRED=NO             build
+
+          xcodebuild \
+            -project MyCarPlayBrowser.xcodeproj \
+            -scheme MyCarPlayBrowser \
+            -sdk iphonesimulator \
+            -configuration Debug \
+            -derivedDataPath "$RUNNER_TEMP/MyCarPlayBrowserDerivedData" \
+            CODE_SIGNING_ALLOWED=NO \
+            CODE_SIGNING_REQUIRED=NO \
+            build
 
       - name: Upload iOS app
         uses: actions/upload-artifact@v4
