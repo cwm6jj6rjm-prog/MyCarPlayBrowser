@@ -1,8 +1,6 @@
 import CarPlay
 import UIKit
 
-/// CarPlay interface for the same MyCarPlayBrowser app.
-/// No second/car-only app is created.
 final class CarPlaySceneDelegate: UIResponder, CPTemplateApplicationSceneDelegate {
     private weak var interfaceController: CPInterfaceController?
 
@@ -20,10 +18,7 @@ final class CarPlaySceneDelegate: UIResponder, CPTemplateApplicationSceneDelegat
     private func makeRootTemplate() -> CPTemplate {
         let services = Array(Services.all.prefix(8))
         let buttons = services.map { service in
-            CPGridButton(
-                titleVariants: [service.name],
-                image: UIImage(systemName: icon(for: service.id)) ?? UIImage(systemName: "globe")!
-            ) { [weak self] _ in
+            CPGridButton(titleVariants: [service.name], image: UIImage(systemName: icon(for: service.id)) ?? UIImage(systemName: "globe")!) { [weak self] _ in
                 self?.showService(service)
             }
         }
@@ -31,37 +26,27 @@ final class CarPlaySceneDelegate: UIResponder, CPTemplateApplicationSceneDelegat
     }
 
     private func showService(_ service: Service) {
-        let item = CPListItem(
-            text: service.name,
-            detailText: "Open on iPhone to browse this service."
-        )
-        item.handler = { [weak self] _, completion in
+        let open = CPListItem(text: service.name, detailText: "Open on iPhone")
+        open.handler = { [weak self] _, completion in
             completion()
-            // A CarPlay template cannot simply embed a normal WKWebView.
-            // Native video/AirPlay playback will be connected in the video phase.
             self?.interfaceController?.popTemplate(animated: true)
         }
-        let list = CPListTemplate(
-            title: service.name,
-            sections: [CPListSection(items: [item])]
-        )
-        interfaceController?.pushTemplate(list, animated: true)
+        let home = CPListItem(text: "Back to MyCarPlayBrowser", detailText: service.url)
+        home.handler = { _, completion in completion() }
+        interfaceController?.pushTemplate(CPListTemplate(title: service.name, sections: [CPListSection(items: [open, home])]), animated: true)
     }
 
     private func icon(for id: String) -> String {
         switch id {
         case "youtube": return "play.rectangle.fill"
-        case "netflix": return "play.tv.fill"
-        case "disney": return "play.tv.fill"
+        case "netflix": return "tv.fill"
+        case "disney": return "sparkles.tv.fill"
         case "apple": return "apple.logo"
         case "prime": return "play.tv.fill"
         case "spotify": return "music.note"
         case "google": return "magnifyingglass"
-        case "browser": return "globe"
-        case "gmail": return "envelope.fill"
-        case "instagram": return "camera.fill"
-        case "facebook": return "person.2.fill"
-        default: return "play.tv.fill"
+        case "browser": return "safari.fill"
+        default: return "globe"
         }
     }
 }
